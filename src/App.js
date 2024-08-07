@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_URL = 'http://91.134.88.126:1337'
+const API_URL = 'https://cpool-api.thmarinho.dev'
 
 const App = () => {
   const [isLoading, setisLoading] = useState(true)
