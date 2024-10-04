@@ -50,10 +50,10 @@ const App = () => {
   ]
 
   const TEAMS = [
-    "p-8 z-10 gap-4 flex items-center absolute top-0 left-0",
-    "p-8 z-10 gap-4 flex items-center flex-row-reverse absolute top-0 right-0",
-    "p-8 z-10 gap-4 flex items-center absolute bottom-0 left-0",
-    "p-8 z-10 gap-4 flex items-center flex-row-reverse absolute bottom-0 right-0",
+    "p-8 z-10 gap-4 flex items-center flex-col md:flex-row absolute top-0 left-0",
+    "p-8 z-10 gap-4 flex items-center flex-col md:flex-row-reverse absolute top-0 right-0",
+    "p-8 z-10 gap-4 flex items-center flex-col-reverse md:flex-row absolute bottom-0 left-0",
+    "p-8 z-10 gap-4 flex items-center flex-col-reverse md:flex-row-reverse absolute bottom-0 right-0",
   ]
 
   const maxPoints = Math.max(...Object.values(points.reduce((acc, { team, points }) => ({ ...acc, [team]: (acc[team] || 0) + points }), {})));
@@ -63,7 +63,7 @@ const App = () => {
     <div className="h-screen w-screen bg-gray-50 grid grid-cols-12 select-none">
 
       {/* Teams & logo */}
-      <div className="col-span-9 h-full relative">
+      <div className="col-span-12 md:col-span-9 h-full relative">
         <img src="/logo.png" className="z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1/4" alt="" />
         <div className="grid grid-cols-2 h-full">
           {teams.map((team, idx) => {
@@ -71,11 +71,11 @@ const App = () => {
 
             return (
               <div className="flex flex-col items-center justify-center gap-2 relative" key={team.name}>
-                <div className={POINTS[idx]} style={{ backgroundColor: team.color, height: `${(teamPoints * 60 / maxPoints) + 30}%`, }}></div>
+                <div className={POINTS[idx]} style={{ backgroundColor: team.color, [window.innerWidth < 768 ? "width" : "height"]: `${(teamPoints * 60 / maxPoints) + 30}%`, }}></div>
                 <div className={TEAMS[idx]}>
                   <img className="h-24 aspect-square object-cover" src={`${API_URL}${team.logo}`} alt="" />
                   <div>
-                    <p className="text-2xl font-bold">{team.name}</p>
+                    <p className="hidden md:block text-2xl font-bold">{team.name}</p>
                     <p className="text-xl">{teamPoints} points</p>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ const App = () => {
       </div>
 
       {/* Sidebar */}
-      <div className="grid col-span-3 shadow-lg z-10 ">
+      <div className="hidden md:grid col-span-3 shadow-lg z-10">
         <div className="max-w-[25vw] text-ellipsis py-6 px-4 max-h-screen overflow-auto">
           <h1 className="font-bold text-xl text-center mb-6">Points obtenus</h1>
           {points.map((point, idx) => {
